@@ -18,16 +18,6 @@ wtm_get <- function(endpoint,
                     or = NULL,
                     raw = F) {
 
-    # roomId[$in][]=2
-
-
-
-    # values_in_var_vec <- values_in_var %>%
-    #     glue::glue("$sort[{sort_by}]")
-
-    # roomId[$in][]=2
-
-
     input_list <- list(country = country,
                        party = party,
                        '$select[]' = selects,
@@ -39,200 +29,78 @@ wtm_get <- function(endpoint,
         purrr::flatten()
 
 
-    if(!is.null(sort_by) | !is.null(values_in_var) |
-       !is.null(values_in_var) | !is.null(gt) |
-       !is.null(gte) | !is.null(lt) | !is.null(lte) |
-       !is.null(ne) | !is.null(or)){
 
-        ###### sort by ####
-        if(!is.null(sort_by)){
+    ###### sort by ####
+    if(!is.null(sort_by)){
 
-            if(length(sort_by) != length(sort_dir)){
-                warning(glue::glue("length of sort_by does not match sort_dir. Will use default direction: `{sort_dir}`"))
-                sort_dir <- rep(sort_dir, length(sort_by))
-            }
-
-            sort_by_vec <- glue::glue("$sort[{sort_by}]")
-
-            sort_append <- list(sort_dir) %>%
-                purrr::flatten() %>%
-                purrr::set_names(sort_by_vec) %>%
-                purrr::imap(~url_form(.x, .y)) %>%
-                purrr::flatten()
-
-            fin <- fin %>%
-                rlist::list.append(sort_append) %>%
-                purrr::flatten()
+        if(length(sort_by) != length(sort_dir)){
+            warning(glue::glue("length of sort_by does not match sort_dir. Will use default direction: `{sort_dir}`"))
+            sort_dir <- rep(sort_dir, length(sort_by))
         }
 
-        if(!is.null(values_in_var) | !is.null(values_nin_var)){
-            ###### in ####
+        sort_by_vec <- glue::glue("$sort[{sort_by}]")
 
-            we <- list(values_in_var, values_nin_var, gt) %>%
-                # purrr::flatten() %>%
-                set_names(c("values_in_var", "values_nin_var", "gt"))
+        sort_append <- flatten_it(sort_dir,
+                                sort_by_vec)
 
-            we
+        fin <- fin %>%
+            rlist::list.append(sort_append) %>%
+            purrr::flatten()
+    }
 
-            wrap_it <- function(yx, we_names) {
+    if(any(!is.null(values_in_var), !is.null(values_in_var),
+       !is.null(gt), !is.null(gte), !is.null(lt),
+       !is.null(lte), !is.null(ne))){
 
-                # yx <- we[[1]]
-
-                yx_names <- names(yx)
-                # we_names <- names(we)[[1]]
-
-                 sd <- case_when(
-                    we_names == "values_in_var" ~ "[$in][]",
-                    we_names == "values_nin_var" ~ "[$nin][]",
-                    T ~ as.character(glue::glue("[${we_names}]"))
-                )
-
-
-                vec <- glue::glue("{yx_names}{sd}")
-
-                in_append <- flatten_it(yx,
-                                        vec)
-
-                # fin <- fin %>%
-                #     rlist::list.append(in_append) %>%
-                #     purrr::flatten()
-
-                return(in_append)
-
-            }
-
-            out_append <- we %>%
-                imap(wrap_it) %>%
-                purrr::flatten()
-
-            fin <- fin %>%
-                rlist::list.append(out_append) %>%
-                purrr::flatten()
-
-
-            if(!is.null(values_in_var)){
-
-            values_in_var_vec <- glue::glue("{names(values_in_var)}[$in][]")
-
-            in_append <- flatten_it(values_in_var,
-                                    values_in_var_vec)
-
-            fin <- fin %>%
-                rlist::list.append(in_append) %>%
-                purrr::flatten()
-
-            }
-
-            if(!is.null(values_nin_var)){
-
-                values_nin_var_vec <- glue::glue("{names(values_nin_var)}[$nin][]")
-
-                nin_append <- flatten_it(values_nin_var,
-                                         values_nin_var_vec)
-
-                fin <- fin %>%
-                    rlist::list.append(nin_append) %>%
-                    purrr::flatten()
-            }
-
-        }
-
-        if(!is.null(gt) | !is.null(gte)){
-            ###### gt ####
-
-
-            if(!is.null(gt)){
-
-
-                vec <- glue::glue("{names(gt)}[$gt]")
-
-                append_list <- flatten_it(gt,
-                                          vec)
-
-                fin <- fin %>%
-                    rlist::list.append(append_list) %>%
-                    purrr::flatten()
-
-            }
-
-            if(!is.null(gte)){
-
-                vec <- glue::glue("{names(gte)}[$gte]")
-
-                append_list <- flatten_it(gte,
-                                          vec)
-
-                fin <- fin %>%
-                    rlist::list.append(append_list) %>%
-                    purrr::flatten()
-
-            }
-
-        }
-
-        if(!is.null(lt) | !is.null(lte)){
-            ###### lt ####
-
-
-            if(!is.null(lt)){
-
-                vec <- glue::glue("{names(lt)}[$lt]")
-
-                append_list <- flatten_it(lt,
-                                          vec)
-
-                fin <- fin %>%
-                    rlist::list.append(append_list) %>%
-                    purrr::flatten()
-
-            }
-
-            if(!is.null(lte)){
-
-                vec <- glue::glue("{names(lte)}[$lte]")
-
-                append_list <- flatten_it(lte,
-                                          vec)
-
-                fin <- fin %>%
-                    rlist::list.append(append_list) %>%
-                    purrr::flatten()
-
-            }
-
-        }
-
-
-        if(!is.null(ne)){
-            ###### ne ####
-
-
-           vec <- glue::glue("{names(ne)}[$ne]")
-
-           append_list <- flatten_it(ne,
-                                     vec)
-
-           fin <- fin %>%
-               rlist::list.append(append_list) %>%
-               purrr::flatten()
-
-        }
+        args <- list(values_in_var,
+                     values_nin_var,
+                     gt, gte,
+                     lt, lte,
+                     ne) %>%
+            set_names(c("values_in_var",
+                        "values_nin_var",
+                        "gt", "gte",
+                        "lt", "lte",
+                        "ne"
+                        ))
 
         if(!is.null(or)){
-            ###### or ####
-            # GET /messages?$or[0][archived][$ne]=true&$or[1][roomId]=2
+            op <- case_when(
+                or == "values_in_var" ~ "\\$in",
+                or == "values_nin_var" ~ "\\$nin",
+                T ~ as.character(glue::glue("\\${or}"))
+            )
+
+            out_append <- args %>%
+                purrr::imap(wrap_it) %>%
+                purrr::flatten()
+
+            or_list_raw <- out_append[str_detect(names(out_append), paste0(op, collapse = "|"))]
+
+            or_list <- list(`$or` = or_list_raw)
+
+            or_list_flatten <- rlist::list.flatten(or_list)
+            or_list_names <- rlist::list.names(or_list_flatten) %>%
+                stringr::str_replace("\\[", "][") %>%
+                stringr::str_replace("\\.", ".[") %>%
+                stringr::str_replace("\\.", glue::glue("[{1:length(or_list_flatten)-1}]"))
+
+            or_list_complete <- or_list_flatten %>%
+                purrr::set_names(or_list_names)
 
 
-            vec <- glue::glue("$or[0]{names(or)}[$ne]")
+            out_append <- out_append[!str_detect(names(out_append), paste0(op, collapse = "|"))]
 
-            append_list <- flatten_it(ne,
-                                      vec)
-
-            fin <- fin %>%
-                rlist::list.append(append_list) %>%
+            out_append <- out_append %>%
+                rlist::list.append(or_list_complete) %>%
                 purrr::flatten()
 
         }
+
+
+        fin <- fin %>%
+            rlist::list.append(out_append) %>%
+            purrr::flatten()
 
     }
 
@@ -242,27 +110,26 @@ wtm_get <- function(endpoint,
         query = fin
     )
 
-    con <- httr::content(res)
 
-    return(res)
+    if(raw){
+
+        return(res)
+
+    } else {
+
+        con <- httr::content(res)
+
+        con <- con$data %>%
+            bind_rows()
+
+        return(con)
+    }
+
 }
 
+
+
 debugonce(wtm_get)
-
-values_in_var <- list(impressions = c(3, 4),
-                      date = c("2021-07-20", "2021-07-19"))
-
-asd <- wtm_get(endpoint = "candidates-impressions",
-               sort_by = c("impressions", "date"),
-               sort_dir =  -1,
-               values_nin_var = list(
-                   facebookName = c("wirBerlin", "PETA Deutschland"),
-                   date = c("2021-06-20", "2021-06-19")),
-               values_in_var = list(
-                   facebookName = c("wirBerlin", "PETA Deutschland"),
-                   date = c("2021-06-20", "2021-06-19")),
-               gt = list(impressions = 20))
-httr::content(asd)
 
 
 url_form <- function(x, listname) {
@@ -285,3 +152,37 @@ flatten_it <- function(val, nam) {
         purrr::imap(~url_form(.x, .y)) %>%
         purrr::flatten()
 }
+
+
+wrap_it <- function(arg, arg_names) {
+
+    var_names <- names(arg)
+
+    val <- case_when(
+        arg_names == "values_in_var" ~ "[$in][]",
+        arg_names == "values_nin_var" ~ "[$nin][]",
+        T ~ as.character(glue::glue("[${arg_names}]"))
+    )
+
+
+    vec <- glue::glue("{var_names}{val}")
+
+    in_append <- flatten_it(arg,
+                            vec)
+
+
+    return(in_append)
+
+}
+
+
+# values_in_var <- list(impressions = c(3, 4),
+#                       date = c("2021-07-20", "2021-07-19"))
+#
+# asd <- wtm_get(endpoint = "candidates-impressions",
+#                sort_by = c("impressions", "date"),
+#                sort_dir =  -1,
+#                values_in_var = list(facebookName = c("wirBerlin", "PETA Deutschland"),
+#                                     date = c("2021-06-20", "2021-06-19")),
+#                gt = list(impressions = 20),
+#                or = c("values_in_var"), raw = F)
