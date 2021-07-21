@@ -1,5 +1,5 @@
 
-
+#' @export
 wtm_get <- function(endpoint,
                     country = NULL,
                     party = NULL,
@@ -180,9 +180,12 @@ wrap_it <- function(arg, arg_names) {
 #                       date = c("2021-07-20", "2021-07-19"))
 #
 # asd <- wtm_get(endpoint = "candidates-impressions",
+#                country = "DE",
 #                sort_by = c("impressions", "date"),
 #                sort_dir =  -1,
 #                values_in_var = list(facebookName = c("wirBerlin", "PETA Deutschland"),
 #                                     date = c("2021-06-20", "2021-06-19")),
 #                gt = list(impressions = 20),
 #                or = c("values_in_var"), raw = F)
+# asd
+# httr::content(asd) %>% View
