@@ -56,7 +56,7 @@ wtm_get(
 
 \item{ne}{find all records that do not equal the given property value. Input is a list: \code{list(variable = c(1:3))}.}
 
-\item{or}{find all records that match any of the given criteria. Specify the params as chr (vector) that should be combined with an \verb{$or} statement. Example: c("values_in_var", "gt").}
+\item{or}{find all records that match any of the given criteria. Specify the params as chr (vector) that should be combined with an \verb{$or} statement. Example: \code{c("values_in_var", "gt")}.}
 
 \item{...}{additional arguments you can pass to test for equality. Example = \code{facebookName = PragerU} retrieves all entries by advertiser \code{PragerU}.}
 
@@ -64,4 +64,22 @@ wtm_get(
 }
 \description{
 The goal of \code{wtm_get} is to provide access to the \href{https://data-api.whotargets.me/docs/}{public data API} of \href{https://whotargets.me/en/}{Who Targets Me}.
+}
+\examples{
+# retrieve all advertiser targeting methods in the use
+# that have a greater or equal value of `bct = 1`.
+wtm_get(endpoint = "candidates-targeting-methods",
+        country = "US",
+        gte = list(bct = 1))
+
+
+
+# retrieve all advertiser targeting methods in the use
+# that have a greater or equal value of `bct = 1` OR
+# `custom_audiences_lookalike = 20`.
+wtm_get(endpoint = "candidates-targeting-methods",
+        country = "US",
+        gte = list(bct = 1),
+        value_in_var = list(custom_audiences_lookalike = 20),
+        or = c("gte", "value_in_var"))
 }
