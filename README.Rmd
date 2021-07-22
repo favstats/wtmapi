@@ -40,20 +40,13 @@ This is a basic example which shows you how to solve a common problem:
 library(wtmapi)
 ```
 
-### Retrieve candidates impressions
-
-```{r}
-ads <- wtm_get(endpoint = "candidates-impressions", country = "DE", party = "CDU")
-
-ads
-
-
-```
-
 ### Retrieve impressions
 
 ```{r}
-impressions_dat <- wtm_get(endpoint = "candidates-impressions", country = "DE", party = "CDU")
+impressions_dat <- wtm_get(endpoint = "candidates-impressions", 
+               country = "DE", 
+               party = "CDU",
+               lt = list(impressions = 20))
 
 impressions_dat
 
@@ -61,20 +54,23 @@ impressions_dat
 ```
 
 
+
 ### Retrieve targeting methods
 
 ```{r}
-targeting_dat <- wtm_get(endpoint = "candidates-targeting-methods", country = "DE", party = "SPD")
+targeting_dat <- wtm_get(endpoint = "candidates-targeting-methods", 
+                         country = "US",
+                         gte = list(bct = 1))
 
 targeting_dat
-
 
 ```
 
 ### Retrieve daily totals
 
 ```{r}
-daily_totals <- wtm_get(endpoint = "impressions-daily-totals", country = "DE")
+daily_totals <- wtm_get(endpoint = "impressions-daily-totals", 
+                        country = "DE")
 
 daily_totals
 

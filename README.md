@@ -31,69 +31,52 @@ This is a basic example which shows you how to solve a common problem:
 library(wtmapi)
 ```
 
-### Retrieve candidates impressions
-
-``` r
-ads <- wtm_get(endpoint = "candidates-impressions", country = "DE", party = "CDU")
-
-ads
-#> # A tibble: 25 x 7
-#>    id          facebookId   facebookName         party country date  impressions
-#>    <chr>       <chr>        <chr>                <chr> <chr>   <chr> <chr>      
-#>  1 cc0ebc83e3~ 20125673290~ Michael Sack         CDU   DE      2021~ 1          
-#>  2 1cf0b67696~ 49090666776~ Sven Schulze         CDU   DE      2021~ 1          
-#>  3 a1e91ad19f~ 78749130807~ Stadt.Land.Main Wür~ CDU   DE      2021~ 1          
-#>  4 97b3c430d2~ 108826898029 Uwe Feiler           CDU   DE      2021~ 1          
-#>  5 525db46633~ 17909200009~ CDU CSU Europa       CDU   DE      2021~ 1          
-#>  6 08b4ddd518~ 12112161461~ Konrad Adenauer Sti~ CDU   DE      2021~ 1          
-#>  7 33aa9dcbf4~ 16358148377~ Konrad-Adenauer-Sti~ CDU   DE      2021~ 1          
-#>  8 20b950a4ce~ 12695290398~ CDU Berlin           CDU   DE      2021~ 1          
-#>  9 318bda56ff~ 78749130807~ Stadt.Land.Main Wür~ CDU   DE      2021~ 1          
-#> 10 1b241ca4c2~ 32786287400~ Anja Karliczek       CDU   DE      2021~ 1          
-#> # ... with 15 more rows
-```
-
 ### Retrieve impressions
 
 ``` r
-impressions_dat <- wtm_get(endpoint = "candidates-impressions", country = "DE", party = "CDU")
+impressions_dat <- wtm_get(endpoint = "candidates-impressions", 
+               country = "DE", 
+               party = "CDU",
+               lt = list(impressions = 20))
 
 impressions_dat
 #> # A tibble: 25 x 7
 #>    id          facebookId   facebookName         party country date  impressions
 #>    <chr>       <chr>        <chr>                <chr> <chr>   <chr> <chr>      
-#>  1 cc0ebc83e3~ 20125673290~ Michael Sack         CDU   DE      2021~ 1          
-#>  2 1cf0b67696~ 49090666776~ Sven Schulze         CDU   DE      2021~ 1          
-#>  3 a1e91ad19f~ 78749130807~ Stadt.Land.Main Wür~ CDU   DE      2021~ 1          
-#>  4 97b3c430d2~ 108826898029 Uwe Feiler           CDU   DE      2021~ 1          
-#>  5 525db46633~ 17909200009~ CDU CSU Europa       CDU   DE      2021~ 1          
-#>  6 08b4ddd518~ 12112161461~ Konrad Adenauer Sti~ CDU   DE      2021~ 1          
-#>  7 33aa9dcbf4~ 16358148377~ Konrad-Adenauer-Sti~ CDU   DE      2021~ 1          
+#>  1 a1e91ad19f~ 78749130807~ Stadt.Land.Main Wür~ CDU   DE      2021~ 1          
+#>  2 cc0ebc83e3~ 20125673290~ Michael Sack         CDU   DE      2021~ 1          
+#>  3 1cf0b67696~ 49090666776~ Sven Schulze         CDU   DE      2021~ 1          
+#>  4 525db46633~ 17909200009~ CDU CSU Europa       CDU   DE      2021~ 1          
+#>  5 08b4ddd518~ 12112161461~ Konrad Adenauer Sti~ CDU   DE      2021~ 1          
+#>  6 630c35cad4~ 33467267022~ CDU Göttingen        CDU   DE      2021~ 1          
+#>  7 1b241ca4c2~ 32786287400~ Anja Karliczek       CDU   DE      2021~ 1          
 #>  8 20b950a4ce~ 12695290398~ CDU Berlin           CDU   DE      2021~ 1          
-#>  9 318bda56ff~ 78749130807~ Stadt.Land.Main Wür~ CDU   DE      2021~ 1          
-#> 10 1b241ca4c2~ 32786287400~ Anja Karliczek       CDU   DE      2021~ 1          
+#>  9 33aa9dcbf4~ 16358148377~ Konrad-Adenauer-Sti~ CDU   DE      2021~ 1          
+#> 10 318bda56ff~ 78749130807~ Stadt.Land.Main Wür~ CDU   DE      2021~ 1          
 #> # ... with 15 more rows
 ```
 
 ### Retrieve targeting methods
 
 ``` r
-targeting_dat <- wtm_get(endpoint = "candidates-targeting-methods", country = "DE", party = "SPD")
+targeting_dat <- wtm_get(endpoint = "candidates-targeting-methods", 
+                         country = "US",
+                         gte = list(bct = 1))
 
 targeting_dat
 #> # A tibble: 25 x 36
-#>    id       facebookId  facebookName    party country total_ads actionable_insi~
-#>    <chr>    <chr>       <chr>           <chr> <chr>   <chr>     <chr>           
-#>  1 fbfcb85~ 1003777185~ Takis Mehmet A~ SPD   DE      4         0               
-#>  2 ccfe53a~ 1003895020~ Kai Koeser      SPD   DE      3         0               
-#>  3 b7991ec~ 1005084388~ Philipp Siever~ SPD   DE      1         0               
-#>  4 953c3a4~ 1007559819~ Seija Knorr-Kö~ SPD   DE      13        0               
-#>  5 e7e7302~ 1008127920~ Claudio Proven~ SPD   DE      1         0               
-#>  6 500f802~ 1008923747~ Lennard Oehl -~ SPD   DE      2         0               
-#>  7 84470c9~ 1019100717~ Dr. Carolin Wa~ SPD   DE      1         0               
-#>  8 89330f1~ 1019681316~ Andreas Larem ~ SPD   DE      15        0               
-#>  9 23587e4~ 1021607684~ Lina Seitzl     SPD   DE      7         0               
-#> 10 a23bc37~ 1023433218~ Jakob Blankenb~ SPD   DE      1         0               
+#>    id        facebookId  facebookName   party country total_ads actionable_insi~
+#>    <chr>     <chr>       <chr>          <chr> <chr>   <chr>     <chr>           
+#>  1 0dd4aacc~ 1061240530~ Joe Collins    GOP   US      70        0               
+#>  2 d5d0d159~ 1124023587~ PopSugar       Biden US      387       0               
+#>  3 6b108eb6~ 1228396643~ Michelle Steel GOP   US      12        0               
+#>  4 4dbb3b4b~ 12301006942 Democratic Pa~ DemP~ US      52        0               
+#>  5 2819c7b6~ 1272259106~ PragerU        Oth   US      309       0               
+#>  6 ecc4bc9a~ 1316372698~ Alexandria Oc~ Dems  US      283       0               
+#>  7 015c0299~ 1593518174~ Candace Owens  RepP~ US      12        0               
+#>  8 64f600b8~ 2116141045~ Mike Garcia f~ GOP   US      7         0               
+#>  9 3ec7fa0b~ 23790541544 Democrats      Dems  US      5         0               
+#> 10 263fb797~ 24330467048 Americans for~ RepP~ US      86        0               
 #> # ... with 15 more rows, and 29 more variables: age_gender <chr>, bct <chr>,
 #> #   collaborative_ad <chr>, collaborative_ads_category_targeting <chr>,
 #> #   collaborative_ads_store_visits <chr>, connection <chr>,
@@ -114,7 +97,8 @@ targeting_dat
 ### Retrieve daily totals
 
 ``` r
-daily_totals <- wtm_get(endpoint = "impressions-daily-totals", country = "DE")
+daily_totals <- wtm_get(endpoint = "impressions-daily-totals", 
+                        country = "DE")
 
 daily_totals
 #> # A tibble: 25 x 7

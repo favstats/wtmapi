@@ -1,4 +1,27 @@
-
+#' wtm_get
+#'
+#'
+#' The goal of `wtm_get` is to provide access to the [public data API](https://data-api.whotargets.me/docs/) of [Who Targets Me](https://whotargets.me/en/).
+#'
+#'
+#' @param endpoint the API endpoint you want to retrieve. currently supports: `candidates-impressions`, `candidates-targeting-methods` and `impressions-daily-totals`.
+#' @param country which country to retrieve data from (ISO2). Examples: `"DE"`, `"US"` etc.
+#' @param party which party to retrieve data from. Examples: `"CDU"`, `"Biden"` etc.
+#' @param limit will return only the number of results you specify
+#' @param skip will skip the specified number of results
+#' @param selects allows to pick which fields to include in the result, chr or vector of chrs
+#' @param sort_by  will sort based on the variable you provide (chr)
+#' @param sort_dir  sort direction (`1` ascending, `-1` descending) (default = `1`)
+#' @param values_in_var  find all records where the property does (`$in`) match any of the given values. Input is a list: `list(variable = c(1:3))`.
+#' @param values_nin_var  find all records where the property does not (`$nin`) match any of the given values.  Input is a list: `list(variable = c(1:3))`.
+#' @param lt  find all records where the value is less (`$lt`) to a given value. Input is a list: `list(variable = c(1:3))`.
+#' @param lte  find all records where the value is less and equal (`$lte`) to a given value. Input is a list: `list(variable = c(1:3))`.
+#' @param gt  find all records where the value is more (`$gt`) to a given value. Input is a list: `list(variable = c(1:3))`.
+#' @param gte  find all records where the value is more and equal (`$gte`) to a given value. Input is a list: `list(variable = c(1:3))`.
+#' @param ne  find all records that do not equal the given property value. Input is a list: `list(variable = c(1:3))`.
+#' @param or find all records that match any of the given criteria. Specify the params as chr (vector) that should be combined with an `$or` statement. Example: c("values_in_var", "gt").
+#' @param ...  additional arguments you can pass to test for equality. Example = `facebookName = PragerU` retrieves all entries by advertiser `PragerU`.
+#' @param raw  whether to return the raw `GET` request or a tidy data frame (defaults to `FALSE`)
 #' @export
 wtm_get <- function(endpoint,
                     country = NULL,
@@ -16,7 +39,11 @@ wtm_get <- function(endpoint,
                     gte = NULL,
                     ne = NULL,
                     or = NULL,
+                    ...,
                     raw = F) {
+
+
+    params <- list(...)
 
     input_list <- list(country = country,
                        party = party,
@@ -24,10 +51,14 @@ wtm_get <- function(endpoint,
                        '$limit' = limit,
                        '$skip' = skip)
 
-    fin <- input_list %>%
-        imap(~url_form(.x, .y)) %>%
-        purrr::flatten()
+    if(length(params)!=0){
+        input_list <- rlist::list.append(input_list, params) %>%
+            purrr::flatten()
+    }
 
+    fin <- input_list %>%
+        purrr::imap(~url_form(.x, .y)) %>%
+        purrr::flatten()
 
 
     ###### sort by ####
@@ -64,16 +95,17 @@ wtm_get <- function(endpoint,
                         "ne"
                         ))
 
+
+        out_append <- args %>%
+            purrr::imap(wrap_it) %>%
+            purrr::flatten()
+
         if(!is.null(or)){
             op <- case_when(
                 or == "values_in_var" ~ "\\$in",
                 or == "values_nin_var" ~ "\\$nin",
                 T ~ as.character(glue::glue("\\${or}"))
             )
-
-            out_append <- args %>%
-                purrr::imap(wrap_it) %>%
-                purrr::flatten()
 
             or_list_raw <- out_append[str_detect(names(out_append), paste0(op, collapse = "|"))]
 
@@ -120,7 +152,7 @@ wtm_get <- function(endpoint,
         con <- httr::content(res)
 
         con <- con$data %>%
-            bind_rows()
+            dplyr::bind_rows()
 
         return(con)
     }
@@ -129,7 +161,6 @@ wtm_get <- function(endpoint,
 
 
 
-debugonce(wtm_get)
 
 
 url_form <- function(x, listname) {

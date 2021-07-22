@@ -1,13 +1,12 @@
 Package: wtmapi
-Title: What the Package Does (One Line, Title Case)
+Title: Access to Public Who Targets Me API
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Fabio",
+           family = "Votta",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "fabio.vottat@gmail.com")
+Description: Access to Public Who Targets Me API.
 License: MIT + file LICENSE
 Suggests: 
     testthat (>= 3.0.0)
@@ -19,4 +18,9 @@ RoxygenNote: 7.1.1
 URL: https://github.com/favstats/wtmapi
 BugReports: https://github.com/favstats/wtmapi/issues
 Imports: 
-    magrittr
+    magrittr,
+    dplyr,
+    purrr,
+    stringr,
+    rlist,
+    glue
