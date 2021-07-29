@@ -137,7 +137,6 @@ wtm_get <- function(endpoint,
             or_list_complete <- or_list_flatten %>%
                 purrr::set_names(or_list_names)
 
-
             out_append <- out_append[!stringr::str_detect(names(out_append), paste0(op, collapse = "|"))]
 
             out_append <- out_append %>%
