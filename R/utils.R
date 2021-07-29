@@ -24,7 +24,7 @@ wrap_it <- function(arg, arg_names) {
 
     var_names <- names(arg)
 
-    val <- case_when(
+    val <- dplyr::case_when(
         arg_names == "values_in_var" ~ "[$in][]",
         arg_names == "values_nin_var" ~ "[$nin][]",
         T ~ as.character(glue::glue("[${arg_names}]"))

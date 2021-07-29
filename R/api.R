@@ -105,7 +105,7 @@ wtm_get <- function(endpoint,
                      gt, gte,
                      lt, lte,
                      ne) %>%
-            set_names(c("values_in_var",
+            purrr::set_names(c("values_in_var",
                         "values_nin_var",
                         "gt", "gte",
                         "lt", "lte",
@@ -118,13 +118,13 @@ wtm_get <- function(endpoint,
             purrr::flatten()
 
         if(!is.null(or)){
-            op <- case_when(
+            op <- dplyr::case_when(
                 or == "values_in_var" ~ "\\$in",
                 or == "values_nin_var" ~ "\\$nin",
                 T ~ as.character(glue::glue("\\${or}"))
             )
 
-            or_list_raw <- out_append[str_detect(names(out_append), paste0(op, collapse = "|"))]
+            or_list_raw <- out_append[stringr::str_detect(names(out_append), paste0(op, collapse = "|"))]
 
             or_list <- list(`$or` = or_list_raw)
 
@@ -138,7 +138,7 @@ wtm_get <- function(endpoint,
                 purrr::set_names(or_list_names)
 
 
-            out_append <- out_append[!str_detect(names(out_append), paste0(op, collapse = "|"))]
+            out_append <- out_append[!stringr::str_detect(names(out_append), paste0(op, collapse = "|"))]
 
             out_append <- out_append %>%
                 rlist::list.append(or_list_complete) %>%
@@ -175,11 +175,6 @@ wtm_get <- function(endpoint,
     }
 
 }
-
-
-
-
-
 
 
 # values_in_var <- list(impressions = c(3, 4),

@@ -8,8 +8,6 @@ Authors@R:
            email = "fabio.vottat@gmail.com")
 Description: Access to Public Who Targets Me API.
 License: MIT + file LICENSE
-Suggests: 
-    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
@@ -23,4 +21,7 @@ Imports:
     purrr,
     stringr,
     rlist,
-    glue
+    glue,
+    httr
+Suggests: 
+    testthat (>= 3.0.0)
