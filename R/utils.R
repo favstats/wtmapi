@@ -10,7 +10,6 @@ url_form <- function(x, listname) {
     return(formed_url)
 }
 
-
 flatten_it <- function(val, nam) {
     list(val) %>%
         purrr::flatten() %>%
@@ -18,7 +17,6 @@ flatten_it <- function(val, nam) {
         purrr::imap(~url_form(.x, .y)) %>%
         purrr::flatten()
 }
-
 
 wrap_it <- function(arg, arg_names) {
 

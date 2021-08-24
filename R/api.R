@@ -3,7 +3,6 @@
 #'
 #' The goal of `wtm_get` is to provide access to the [public data API](https://data-api.whotargets.me/docs/) of [Who Targets Me](https://whotargets.me/en/).
 #'
-#'
 #' @param endpoint the API endpoint you want to retrieve. currently supports: `candidates-impressions`, `candidates-targeting-methods` and `impressions-daily-totals`.
 #' @param country which country to retrieve data from (ISO2). Examples: `"DE"`, `"US"` etc.
 #' @param party which party to retrieve data from. Examples: `"CDU"`, `"Biden"` etc.
@@ -28,7 +27,6 @@
 #' wtm_get(endpoint = "candidates-targeting-methods",
 #'         country = "US",
 #'         gte = list(bct = 1))
-#'
 #'
 #'
 #' # retrieve all advertiser targeting methods in the use

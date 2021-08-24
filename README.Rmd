@@ -21,6 +21,7 @@ library(tidyverse)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
+
 The goal of `wtmapi` is to provide access to the [public data API](https://data-api.whotargets.me/docs/) of [Who Targets Me](https://whotargets.me/en/).     
 
 ## Installation
