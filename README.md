@@ -41,18 +41,18 @@ impressions_dat <- wtm_get(endpoint = "candidates-impressions",
 
 impressions_dat
 #> # A tibble: 25 x 7
-#>    id          facebookId  facebookName         party country date   impressions
-#>    <chr>       <chr>       <chr>                <chr> <chr>   <chr>  <chr>      
-#>  1 b7b322302e~ 1921302241~ CDU Nottuln          CDU   DE      2021-~ 1          
-#>  2 4b846f92a4~ 78502295414 CDU                  CDU   DE      2021-~ 14         
-#>  3 85a568249b~ 1269529039~ CDU Berlin           CDU   DE      2021-~ 2          
-#>  4 2a7e7ca5aa~ 1838260483~ CDU Dortmund         CDU   DE      2021-~ 1          
-#>  5 4604b6a48a~ 1095525111~ Axel Kaufmann        CDU   DE      2021-~ 1          
-#>  6 b364e5418d~ 3952926511~ Working Group Inter~ CDU   DE      2021-~ 2          
-#>  7 b58575fe85~ 1095525111~ Axel Kaufmann        CDU   DE      2021-~ 1          
-#>  8 fbfb548077~ 78502295414 CDU                  CDU   DE      2021-~ 9          
-#>  9 d3ef49a544~ 1095525111~ Axel Kaufmann        CDU   DE      2021-~ 1          
-#> 10 32591e3624~ 78502295414 CDU                  CDU   DE      2021-~ 5          
+#>    id            facebookId  facebookName       party country date   impressions
+#>    <chr>         <chr>       <chr>              <chr> <chr>   <chr>  <chr>      
+#>  1 35619e79b4da~ 3494522951~ Peter Stein, Bund~ CDU   DE      2021-~ 1          
+#>  2 537216fb99e8~ 9429490791~ Dr. Jan-Marco Luc~ CDU   DE      2021-~ 2          
+#>  3 196c02df42a2~ 3278628740~ Anja Karliczek     CDU   DE      2021-~ 1          
+#>  4 41cff31f14f2~ 5426055824~ Christian Hirte    CDU   DE      2021-~ 1          
+#>  5 385ef49d23df~ 1088268980~ Uwe Feiler         CDU   DE      2021-~ 1          
+#>  6 25e29121f1dc~ 1009180653~ Klaus Mack         CDU   DE      2021-~ 1          
+#>  7 49764ad28326~ 1370190563~ Felix Schreiner    CDU   DE      2021-~ 4          
+#>  8 1b236ba43279~ 1027685716~ Dr. Ehsan Kangara~ CDU   DE      2021-~ 1          
+#>  9 7dc56dc23c40~ 1023862819~ Ariturel Hack      CDU   DE      2021-~ 1          
+#> 10 445a3371831f~ 4670977199~ Ingo Wellenreuther CDU   DE      2021-~ 3          
 #> # ... with 15 more rows
 ```
 
@@ -68,15 +68,15 @@ targeting_dat
 #>    id        facebookId  facebookName   party country total_ads actionable_insi~
 #>    <chr>     <chr>       <chr>          <chr> <chr>   <chr>     <chr>           
 #>  1 0dd4aacc~ 1061240530~ Joe Collins    GOP   US      71        0               
-#>  2 d5d0d159~ 1124023587~ PopSugar       Biden US      393       0               
-#>  3 6b108eb6~ 1228396643~ Michelle Steel GOP   US      12        0               
-#>  4 4dbb3b4b~ 12301006942 Democratic Pa~ DemP~ US      53        0               
-#>  5 2819c7b6~ 1272259106~ PragerU        Oth   US      321       0               
-#>  6 ecc4bc9a~ 1316372698~ Alexandria Oc~ Dems  US      283       0               
-#>  7 015c0299~ 1593518174~ Candace Owens  RepP~ US      14        0               
-#>  8 64f600b8~ 2116141045~ Mike Garcia f~ GOP   US      7         0               
-#>  9 e59d6093~ 2281325372~ Tammy Duckwor~ Dems  US      10        0               
-#> 10 3ec7fa0b~ 23790541544 Democrats      Dems  US      6         0               
+#>  2 d5d0d159~ 1124023587~ PopSugar       Biden US      397       0               
+#>  3 3874dbe0~ 1165462883~ Heritage Acti~ RepP~ US      6         0               
+#>  4 6b108eb6~ 1228396643~ Michelle Steel GOP   US      12        0               
+#>  5 4dbb3b4b~ 12301006942 Democratic Pa~ DemP~ US      53        0               
+#>  6 2819c7b6~ 1272259106~ PragerU        Oth   US      335       0               
+#>  7 ecc4bc9a~ 1316372698~ Alexandria Oc~ Dems  US      285       0               
+#>  8 015c0299~ 1593518174~ Candace Owens  RepP~ US      15        0               
+#>  9 64f600b8~ 2116141045~ Mike Garcia f~ GOP   US      7         0               
+#> 10 e59d6093~ 2281325372~ Tammy Duckwor~ Dems  US      10        0               
 #> # ... with 15 more rows, and 29 more variables: age_gender <chr>, bct <chr>,
 #> #   collaborative_ad <chr>, collaborative_ads_category_targeting <chr>,
 #> #   collaborative_ads_store_visits <chr>, connection <chr>,
@@ -104,15 +104,15 @@ daily_totals
 #> # A tibble: 25 x 7
 #>    id    country date  advertisers impressions political_adver~ political_impre~
 #>    <chr> <chr>   <chr> <chr>       <chr>       <chr>            <chr>           
-#>  1 e533~ DE      2021~ 6056        41071       97               590             
-#>  2 d814~ DE      2021~ 5310        34515       87               493             
-#>  3 c69b~ DE      2021~ 6563        42499       94               696             
-#>  4 020d~ DE      2021~ 6555        39867       90               609             
-#>  5 f886~ DE      2021~ 7050        48501       91               603             
-#>  6 4297~ DE      2021~ 6745        46372       110              892             
-#>  7 a21b~ DE      2021~ 6697        49373       98               996             
-#>  8 726f~ DE      2021~ 5525        37936       83               787             
-#>  9 5202~ DE      2021~ 5260        32409       88               611             
-#> 10 3306~ DE      2021~ 6108        41850       86               746             
+#>  1 54d5~ DE      2021~ 3887        32700       143              721             
+#>  2 e738~ DE      2021~ 3730        29563       137              629             
+#>  3 156f~ DE      2021~ 4546        38873       164              892             
+#>  4 2179~ DE      2021~ 6331        47513       147              706             
+#>  5 200e~ DE      2021~ 6766        50113       150              821             
+#>  6 e6e2~ DE      2021~ 7273        54130       142              805             
+#>  7 0680~ DE      2021~ 7406        55850       164              943             
+#>  8 e7cc~ DE      2021~ 6165        42536       116              599             
+#>  9 09e2~ DE      2021~ 5758        39692       103              535             
+#> 10 44db~ DE      2021~ 6820        46951       119              826             
 #> # ... with 15 more rows
 ```
