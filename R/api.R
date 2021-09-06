@@ -28,7 +28,6 @@
 #'         country = "US",
 #'         gte = list(bct = 1))
 #'
-#'
 #' # retrieve all advertiser targeting methods in the use
 #' # that have a greater or equal value of `bct = 1` OR
 #' # `custom_audiences_lookalike = 20`.

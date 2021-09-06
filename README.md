@@ -23,15 +23,28 @@ You can install the released version of wtmapi from
 remotes::install_github("favstats/wtmapi")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Examples
 
 ``` r
 library(wtmapi)
 ```
 
+The main function in `wtmapi` to use is **`wtm_get`**. With it you can
+access the API endpoints:
+
+-   `candidates-impressions`
+-   `candidates-targeting-methods`
+-   `impressions-daily-totals`
+
+Here are some basic examples which show you how to solve a common
+problems. If you have questions, refer to the
+[docs](https://data-api.whotargets.me/docs/) which will help you with
+the query parameter.
+
 ### Retrieve impressions
+
+Let’s say we want to retrieve all ads with 20 impressions from the party
+“CDU” in Germany:
 
 ``` r
 impressions_dat <- wtm_get(endpoint = "candidates-impressions", 
@@ -57,6 +70,9 @@ impressions_dat
 ```
 
 ### Retrieve targeting methods
+
+Let’s say we want to retrieve all ads which have greater than or equal
+to one `bct` (which is the behavioural targeting method) in the US:
 
 ``` r
 targeting_dat <- wtm_get(endpoint = "candidates-targeting-methods", 
@@ -96,6 +112,9 @@ targeting_dat
 
 ### Retrieve daily totals
 
+Retrieve the daily total impressions for a country (in this case
+germany):
+
 ``` r
 daily_totals <- wtm_get(endpoint = "impressions-daily-totals", 
                         country = "DE")
@@ -116,3 +135,8 @@ daily_totals
 #> 10 44db~ DE      2021~ 6820        46951       119              826             
 #> # ... with 15 more rows
 ```
+
+## TODO
+
+-   Include pagination
+-   Improve documentation
