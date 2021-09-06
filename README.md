@@ -43,8 +43,8 @@ the query parameter.
 
 ### Retrieve impressions
 
-Let’s say we want to retrieve all ads with 20 impressions from the party
-“CDU” in Germany:
+Let’s say we want to retrieve all ads with *l*ess *t*han (**lt**) 20
+impressions from the party “CDU” in Germany:
 
 ``` r
 impressions_dat <- wtm_get(endpoint = "candidates-impressions", 
@@ -71,8 +71,9 @@ impressions_dat
 
 ### Retrieve targeting methods
 
-Let’s say we want to retrieve all ads which have greater than or equal
-to one `bct` (which is the behavioural targeting method) in the US:
+Let’s say we want to retrieve all ads which have *g*reater *t*han or
+*e*qual (**gte**) to 1 `bct` (which is the behavioural targeting method)
+in the US:
 
 ``` r
 targeting_dat <- wtm_get(endpoint = "candidates-targeting-methods", 
